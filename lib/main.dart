@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tests/models/models.dart';
+import 'widgets/test_review.dart';
 
 void main() {
   runApp(const MyApp());
@@ -6,6 +8,27 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  static SkillsModel skillsModel = SkillsModel(skills: [
+    SkillModel(
+        title: "Swift", score: 23, companyAverage: 33, industryAverage: 44
+    ),
+    SkillModel(
+        title: "objc", score: 66, companyAverage: 33, industryAverage: 44
+    ),
+     SkillModel(
+        title: "arch", score: 98, companyAverage: 33, industryAverage: 44
+    ),
+    SkillModel(
+        title: "algorithmc", score: 42, companyAverage: 33, industryAverage: 44
+    ),
+  ], totalScore: 56);
+
+  static UserModel userModel = UserModel(
+      name: "name",
+      location: "location",
+      testName: "testName",
+      testingDate: "testingDate");
 
   // This widget is the root of your application.
   @override
@@ -24,7 +47,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page1'),
+      home: TestScreenWidget(skillsModel: skillsModel, userModel: userModel),
     );
   }
 }
