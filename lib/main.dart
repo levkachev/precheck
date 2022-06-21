@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     SkillModel(
         title: "algorithmc", score: 42, companyAverage: 33, industryAverage: 44
     ),
-  ], totalScore: 56);
+  ], totalScore: 99);
 
   static UserModel userModel = UserModel(
       name: "name",
