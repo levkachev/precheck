@@ -32,3 +32,10 @@ class SkillModel {
   final int companyAverage;
   final int industryAverage;
 }
+
+class TestSummaryScreenArguments {
+  final UserModel userModel;
+  final SkillsModel skillsModel;
+
+  TestSummaryScreenArguments(this.userModel, this.skillsModel);
+}

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tests/models/models.dart';
 
-class TestScreenWidget extends StatefulWidget {
-  const TestScreenWidget({Key? key, required this.skillsModel, required this.userModel}) : super(key: key);
+class TestScreenWidget extends StatelessWidget {
+  const TestScreenWidget({Key? key, required this.model}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -15,21 +15,14 @@ class TestScreenWidget extends StatefulWidget {
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
 
-  final SkillsModel skillsModel;
-  final UserModel userModel;
-
-  @override
-  State<TestScreenWidget> createState() => _TestScreenWidgetState();
-}
-
-class _TestScreenWidgetState extends State<TestScreenWidget> {
+  final TestSummaryScreenArguments model;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          TestSummaryWidget(userModel: widget.userModel, skillsModel: widget.skillsModel)
+          TestSummaryWidget(userModel: model.userModel, skillsModel: model.skillsModel)
         ],
       ),
     );

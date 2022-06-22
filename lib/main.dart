@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:tests/models/models.dart';
+import 'package:tests/route_names.dart';
+import 'package:tests/widgets/second_screen.dart';
 import 'widgets/test_review.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 void main() {
+  setUrlStrategy(PathUrlStrategy());
   runApp(const MyApp());
 }
 
@@ -35,6 +39,34 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      initialRoute: RoutesName.MAIN_PAGE,
+      onGenerateRoute: (settings) {
+        if (settings.name == RoutesName.MAIN_PAGE) {
+          return MaterialPageRoute(
+            builder: (context) {
+              return TestScreenWidget(
+                  model: TestSummaryScreenArguments(userModel, skillsModel)
+              );
+            }
+          );
+        } else if (settings.name == RoutesName.DETAILS_PAGE) {
+          final title = settings.arguments as String;
+          return MaterialPageRoute(
+              builder: (context) {
+                return SecondPage(title: title);
+              }
+          );
+        } else {
+          return MaterialPageRoute(
+              builder: (context) {
+                return TestScreenWidget(
+                    model: TestSummaryScreenArguments(userModel, skillsModel)
+                );
+              }
+          );
+        }
+      },
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -47,7 +79,6 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: TestScreenWidget(skillsModel: skillsModel, userModel: userModel),
     );
   }
 }
