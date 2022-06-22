@@ -1,0 +1,76 @@
+
+{
+    "kinds": [
+        "singleChoice",
+        "multiChoice",
+        "textInput",
+        "codeInput",
+        "blockMatching???",
+        "audio???"
+    ]
+}
+
+{
+    "kind": "multi_choice", //questionKind
+    // подумать про механику прерывания, для MVP это не надо
+    "testStartAt": 45678490324, // testTime = .now() - timestamp // на каждом вопросе стартует таймер со значения testTime // на фронте отображается и инкрементится в минутах
+    "stepsCount": 20,
+    "currentStep": 1,
+    "title": "What does the following Swift code output?",
+    "description": "Select all suitable variants", // String?
+    "codeSnippet": "определиться c форматом, подойдет ли \n", // String?
+    // isLastQuestion = (stepsCount - currentStep) == 0
+    // progress = 100 * currentStep / stepsCount
+
+
+    // singleChoice && multiChoice
+    "inputModel": {
+        // можно выбрать все варианты в multiChoice и только один в singleChoice
+        "variants": [
+            "21",
+            "12",
+            "Doestn't print anything",
+            "1",
+            "2"
+        ]
+
+    },
+
+    // textInput
+    "inputModel": {
+        "placeholder": "Введите результат" // String?
+    },
+
+    // codeInput
+    "inputModel": {
+        "template": "Какой-то шаблон / заготовка" // String?
+    }
+}
+
+{
+    "kind": "multi_choice",
+    "testStartAt": 45678490324,
+    "stepsCount": 5,
+    "currentStep": 1,
+    "title": "",
+    "description": "",
+    "codeSnippet": "",
+
+    "inputModel": {
+        "variants": [
+            "21",
+            "12",
+            "Doestn't print anything",
+            "1",
+            "2"
+        ]
+    },    
+
+    "inputModel": {
+        "placeholder": "Введите результат"
+    },
+
+    "inputModel": {
+        "template": "Какой-то шаблон / заготовка"
+    }
+}
