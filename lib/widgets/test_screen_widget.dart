@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:tests/controllers/test_controller.dart';
@@ -114,7 +116,7 @@ class _TestScreenState extends StateMVC {
                 currentModel.description,
                 style: const TextStyle(
                   fontSize: 20,
-                  // fontFamily: 'Public Sans'
+                  fontFamily: 'Public Sans'
 
             )
             ),
@@ -197,6 +199,31 @@ class ProgressIndicatorWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class TimerWidget extends StatefulWidget {
+  int startTimestamp;
+  TimerWidget(this.startTimestamp);
+
+  @override
+  _TimerWidgetState createState() => _TimerWidgetState();
+}
+
+class _TimerWidgetState extends State<TimerWidget> {
+  
+  void callback() {
+    setState(() {
+      
+    });
+  }
+
+  // final timer = Timer(duration, callback)
+  
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
   }
 }
 

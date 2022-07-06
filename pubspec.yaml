@@ -62,18 +62,18 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
 
+  #fonts
+  fonts:
+    - family: Public Sans
+      fonts:
+        - asset: fonts/PublicSans-Bold.ttf
+        - asset: fonts/PublicSans-ExtraLight.ttf
+        - asset: fonts/PublicSans-Light.ttf
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
-  #fonts
-#  fonts:
-#    - family: Public Sans
-#      fonts:
-#        - asset: fonts/PublicSans-Bold.ttf
-#        - asset: fonts/PublicSans-ExtraLight.ttf
-#        - asset: fonts/PublicSans-Light.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:
