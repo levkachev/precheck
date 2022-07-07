@@ -88,7 +88,10 @@ class _TestScreenState extends StateMVC {
                 child: ProgressIndicatorWidget(
                     currentModel.currentStep, currentModel.stepsCount),
               ),
-              Expanded(child: Container())
+              Expanded(child: Container(
+                padding: EdgeInsets.only(left: 30),
+                child: TimerWidget(),
+              ))
             ]),
             SizedBox(
               height: 50,
@@ -203,27 +206,50 @@ class ProgressIndicatorWidget extends StatelessWidget {
 }
 
 class TimerWidget extends StatefulWidget {
-  int startTimestamp;
-  TimerWidget(this.startTimestamp);
+  // int startTimestamp;
+  // TimerWidget(this.startTimestamp);
 
   @override
   _TimerWidgetState createState() => _TimerWidgetState();
 }
 
 class _TimerWidgetState extends State<TimerWidget> {
+
+  late Timer timer;
+
+  final stopwatch = Stopwatch();
+
+  int minutes = 0;
+  int seconds = 0;
+
+  int milliseconds = 0;
   
-  void callback() {
-    setState(() {
-      
-    });
+  void callback(Timer timer) {
+    if (milliseconds != stopwatch.elapsedMilliseconds) {
+      milliseconds = stopwatch.elapsedMilliseconds;
+      setState(() {
+        final int hundreds = (milliseconds / 10).truncate();
+        seconds = (hundreds / 100).truncate();
+        minutes = (seconds / 60).truncate();
+      });
+    }
   }
 
-  // final timer = Timer(duration, callback)
+  @override
+  void initState() {
+    timer = Timer.periodic(Duration(milliseconds: 30), callback);
+    stopwatch.start();
+  }
   
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    String minutesStr = (minutes % 60).toString().padLeft(2, '0');
+    String secondsStr = (seconds % 60).toString().padLeft(2, '0');
+    return Row(
+      children: [
+        Text("$minutesStr : $secondsStr" )
+      ],
+    );
   }
 }
 
