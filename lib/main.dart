@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tests/models/models.dart';
 import 'package:tests/route_names.dart';
+import 'package:tests/widgets/intro_screen_widget.dart';
 import 'package:tests/widgets/second_screen.dart';
 import 'package:tests/widgets/test_screen_widget.dart';
 import 'widgets/test_review.dart';
@@ -81,7 +82,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: TestScreen(),
+      home: IntroScreenWidget(),
     );
   }
 }
