@@ -31,7 +31,7 @@ class _TestScreenState extends StateMVC {
   }
 
   void callback(Object answer) {
-  _con.setVariantForItem(answer);
+    _con.setVariantForItem(answer);
   }
 
   void openSecondScreen() {
@@ -49,16 +49,20 @@ class _TestScreenState extends StateMVC {
 
     switch (currentModel.kind) {
       case TestKind.singleChoice:
-        currentWidget = SingleChoiceQuestionWidget((currentModel.inputModel as ChoisesOutput).choises, callback);
+        currentWidget = SingleChoiceQuestionWidget(
+            (currentModel.inputModel as ChoisesOutput).choises, callback);
         break;
       case TestKind.codeInput:
-        currentWidget = CodeInputWidget((currentModel.inputModel as CodeOutput).template, callback);
+        currentWidget = CodeInputWidget(
+            (currentModel.inputModel as CodeOutput).template, callback);
         break;
       case TestKind.textInput:
-        currentWidget = TextInputWidget((currentModel.inputModel as TextOutput).placeholder, callback);
+        currentWidget = TextInputWidget(
+            (currentModel.inputModel as TextOutput).placeholder, callback);
         break;
       case TestKind.multiChoice:
-        currentWidget = MultiChoiceWidget((currentModel.inputModel as ChoisesOutput).choises, callback);
+        currentWidget = MultiChoiceWidget(
+            (currentModel.inputModel as ChoisesOutput).choises, callback);
         break;
     }
 
@@ -88,7 +92,8 @@ class _TestScreenState extends StateMVC {
                 child: ProgressIndicatorWidget(
                     currentModel.currentStep, currentModel.stepsCount),
               ),
-              Expanded(child: Container(
+              Expanded(
+                  child: Container(
                 padding: EdgeInsets.only(left: 30),
                 child: TimerWidget(),
               ))
@@ -96,7 +101,9 @@ class _TestScreenState extends StateMVC {
             SizedBox(
               height: 50,
             ),
-            Text(currentModel.title),
+            Text(currentModel.title,
+                style:
+                    const TextStyle(fontSize: 18, fontFamily: 'Public Sans')),
             SizedBox(
               height: 10,
             ),
@@ -115,14 +122,9 @@ class _TestScreenState extends StateMVC {
             SizedBox(
               height: 20,
             ),
-            Text(
-                currentModel.description,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontFamily: 'Public Sans'
-
-            )
-            ),
+            Text(currentModel.description,
+                style:
+                    const TextStyle(fontSize: 18, fontFamily: 'Public Sans')),
             currentQuestionWidget(),
             SizedBox(
               height: 50,
@@ -134,23 +136,30 @@ class _TestScreenState extends StateMVC {
                   width: 200,
                   height: 50,
                   child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.brown),
-                      overlayColor: MaterialStateProperty.resolveWith((states) {
-                        return Colors.transparent;
-                      }),
-                      enableFeedback: false,
-                      animationDuration: Duration.zero
-                    ),
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.brown),
+                          overlayColor:
+                              MaterialStateProperty.resolveWith((states) {
+                            return Colors.transparent;
+                          }),
+                          enableFeedback: false,
+                          animationDuration: Duration.zero),
                       onPressed: () {
-                        if (currentModel.stepsCount == currentModel.currentStep) {
+                        if (currentModel.stepsCount ==
+                            currentModel.currentStep) {
                           _con.nextButtonTap();
                           openSecondScreen();
                         } else {
                           _con.nextButtonTap();
                         }
                       },
-                      child: Center(child: Text("Далее"))
+                      child: const Center(
+                          child: Text("Далее",
+                              style: const TextStyle(
+                                  fontSize: 18, fontFamily: 'Public Sans')
+                          )
+                      )
                   ),
                 ),
               ),
@@ -197,7 +206,8 @@ class ProgressIndicatorWidget extends StatelessWidget {
     return Container(
       child: Row(
         children: [
-          Text("Шаг $currentStep из $stepsCount"),
+          Text("Шаг $currentStep из $stepsCount",
+              style: const TextStyle(fontSize: 16, fontFamily: 'Public Sans')),
           Container(width: 40),
           Expanded(
             child: ClipRRect(
@@ -227,8 +237,7 @@ class TimerWidget extends StatefulWidget {
 }
 
 class _TimerWidgetState extends State<TimerWidget> {
-
-  late Timer timer;
+  late Timer? timer;
 
   final stopwatch = Stopwatch();
 
@@ -236,7 +245,7 @@ class _TimerWidgetState extends State<TimerWidget> {
   int seconds = 0;
 
   int milliseconds = 0;
-  
+
   void callback(Timer timer) {
     if (milliseconds != stopwatch.elapsedMilliseconds) {
       milliseconds = stopwatch.elapsedMilliseconds;
@@ -257,18 +266,21 @@ class _TimerWidgetState extends State<TimerWidget> {
 
   @override
   void dispose() {
-    timer.cancel();
+    timer?.cancel();
+    timer = null;
     stopwatch.stop();
+    stopwatch.reset();
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     String minutesStr = (minutes % 60).toString().padLeft(2, '0');
     String secondsStr = (seconds % 60).toString().padLeft(2, '0');
     return Row(
       children: [
-        Text("$minutesStr : $secondsStr" )
+        Text("$minutesStr : $secondsStr",
+            style: const TextStyle(fontSize: 16, fontFamily: 'Public Sans'))
       ],
     );
   }

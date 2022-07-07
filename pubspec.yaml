@@ -69,6 +69,9 @@ flutter:
         - asset: fonts/PublicSans-Bold.ttf
         - asset: fonts/PublicSans-ExtraLight.ttf
         - asset: fonts/PublicSans-Light.ttf
+    - family: Comic Sans
+      fonts:
+        - asset: fonts/ComicSansMS.ttf
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
