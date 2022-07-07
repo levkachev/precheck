@@ -127,19 +127,32 @@ class _TestScreenState extends StateMVC {
             SizedBox(
               height: 50,
             ),
-            SizedBox(
-              width: 200,
-              height: 50,
-              child: ElevatedButton(
-                  onPressed: () {
-                    if (currentModel.stepsCount == currentModel.currentStep) {
-                      _con.nextButtonTap();
-                      openSecondScreen();
-                    } else {
-                      _con.nextButtonTap();
-                    }
-                  },
-                  child: Center(child: Text("Далее"))
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: SizedBox(
+                  width: 200,
+                  height: 50,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.brown),
+                      overlayColor: MaterialStateProperty.resolveWith((states) {
+                        return Colors.transparent;
+                      }),
+                      enableFeedback: false,
+                      animationDuration: Duration.zero
+                    ),
+                      onPressed: () {
+                        if (currentModel.stepsCount == currentModel.currentStep) {
+                          _con.nextButtonTap();
+                          openSecondScreen();
+                        } else {
+                          _con.nextButtonTap();
+                        }
+                      },
+                      child: Center(child: Text("Далее"))
+                  ),
+                ),
               ),
             )
           ],
@@ -239,6 +252,14 @@ class _TimerWidgetState extends State<TimerWidget> {
   void initState() {
     timer = Timer.periodic(Duration(milliseconds: 30), callback);
     stopwatch.start();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    stopwatch.stop();
+    super.dispose();
   }
   
   @override
