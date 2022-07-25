@@ -12,8 +12,8 @@ import 'package:tests/widgets/code_input_widget.dart';
 import 'package:tests/widgets/multi_choice_widget.dart';
 import 'package:tests/widgets/second_screen.dart';
 import 'package:tests/widgets/text_input_widget.dart';
-
 import 'single_choice_widget.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 typedef void Callback(Object answer);
 
@@ -38,8 +38,8 @@ class _TestScreenState extends StateMVC {
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
             builder: (BuildContext context) =>
-                const SecondPage(title: "the end")),
-        (route) => false);
+            const SecondPage(title: "the end")),
+            (route) => false);
   }
 
   Widget currentQuestionWidget() {
@@ -80,93 +80,192 @@ class _TestScreenState extends StateMVC {
   Widget build(BuildContext context) {
     TestModel currentModel = _con.getCurrentModel();
     return Scaffold(
-      body: Container(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Row(children: [
-              Expanded(
-                flex: 2,
-                child: ProgressIndicatorWidget(
-                    currentModel.currentStep, currentModel.stepsCount),
+        body: Container(
+          color: Color(0xFF720D5D),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                padding: EdgeInsets.all(16),
+                child: Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: ProgressIndicatorWidget(
+                            currentModel.currentStep, currentModel.stepsCount),
+                      ),
+                      Expanded(
+                          child: Container(
+                            padding: EdgeInsets.only(left: 30),
+                            child: TimerWidget(),
+                          ))
+                    ]),
+              ),
+              Container(
+                height: 30,
+              ),
+              Container(
+                height: 30,
+                child: Stack(
+                  children: [
+                    Container(
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(16),
+                              topRight: Radius.circular(16))
+                      ),
+                    )
+                  ],
+                ),
               ),
               Expanded(
-                  child: Container(
-                padding: EdgeInsets.only(left: 30),
-                child: TimerWidget(),
-              ))
-            ]),
-            SizedBox(
-              height: 50,
-            ),
-            Text(currentModel.title,
-                style:
-                    const TextStyle(fontSize: 18, fontFamily: 'Public Sans')),
-            SizedBox(
-              height: 10,
-            ),
-            if (currentModel.codeSnippet != null) ...{
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                      child: CodeFieldWidget(currentModel.codeSnippet ?? "")),
-                  Expanded(child: Container())
-                ],
-              ),
-            },
-            SizedBox(
-              height: 20,
-            ),
-            Text(currentModel.description,
-                style:
-                    const TextStyle(fontSize: 18, fontFamily: 'Public Sans')),
-            currentQuestionWidget(),
-            SizedBox(
-              height: 50,
-            ),
-            Expanded(
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: SizedBox(
-                  width: 200,
-                  height: 50,
-                  child: ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.brown),
-                          overlayColor:
-                              MaterialStateProperty.resolveWith((states) {
-                            return Colors.transparent;
-                          }),
-                          enableFeedback: false,
-                          animationDuration: Duration.zero),
-                      onPressed: () {
-                        if (currentModel.stepsCount ==
-                            currentModel.currentStep) {
-                          _con.nextButtonTap();
-                          openSecondScreen();
-                        } else {
-                          _con.nextButtonTap();
-                        }
-                      },
-                      child: const Center(
-                          child: Text("Далее",
-                              style: const TextStyle(
-                                  fontSize: 18, fontFamily: 'Public Sans')
+                child: Container(
+                  color: Colors.white,
+                  padding: EdgeInsets.all(16),
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: [
+                      Text(currentModel.title,
+                          style: GoogleFonts.raleway(
+                              textStyle: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18
+                              )
                           )
-                      )
+                      ),
+                      // const TextStyle(fontSize: 18, fontFamily: 'Public Sans')),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      if (currentModel.codeSnippet != null) ...{
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                                child: CodeFieldWidget(
+                                    currentModel.codeSnippet ?? "")),
+                            Expanded(child: Container())
+                          ],
+                        ),
+                      },
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(currentModel.description,
+                          style: GoogleFonts.raleway(
+                              textStyle: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18
+                              )
+                          )
+                      ),
+                      Align(
+                        alignment: Alignment.bottomLeft,
+                        child: currentQuestionWidget(),
+                      ),
+                      SizedBox(
+                        height: 50,
+                      ),
+                      // Expanded(
+                      //   child: Align(
+                      //     alignment: Alignment.bottomCenter,
+                      //     child: SizedBox(
+                      //       width: 200,
+                      //       height: 50,
+                      //       child: ElevatedButton(
+                      //           style: ButtonStyle(
+                      //               backgroundColor:
+                      //               MaterialStateProperty.all<Color>(Colors.brown),
+                      //               overlayColor:
+                      //               MaterialStateProperty.resolveWith((states) {
+                      //                 return Colors.transparent;
+                      //               }),
+                      //               enableFeedback: false,
+                      //               animationDuration: Duration.zero),
+                      //           onPressed: () {
+                      //             if (currentModel.stepsCount ==
+                      //                 currentModel.currentStep) {
+                      //               _con.nextButtonTap();
+                      //               openSecondScreen();
+                      //             } else {
+                      //               _con.nextButtonTap();
+                      //             }
+                      //           },
+                      //           child: Center(
+                      //               child: Text("Далее",
+                      //                   style: GoogleFonts.raleway(
+                      //                       textStyle: TextStyle(
+                      //                           fontWeight: FontWeight.w500,
+                      //                           fontSize: 18
+                      //                       )
+                      //                   )
+                      //               )
+                      //           )
+                      //       ),
+                      //     ),
+                      //   ),
+                      // )
+                    ],
                   ),
                 ),
               ),
-            )
-          ],
+            ],
+          ),
         ),
-      ),
+        floatingActionButton: Align(
+            alignment: Alignment.bottomCenter,
+            child: SizedBox(
+                width: 200,
+                height: 60,
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                        shadowColor: MaterialStateProperty.all<Color>(
+                            Colors.black),
+                        backgroundColor:
+                        MaterialStateProperty.all<Color>(Color(0xFF720D5D)),
+                        overlayColor:
+                        MaterialStateProperty.resolveWith((states) {
+                          return Colors.transparent;
+                        }),
+                        enableFeedback: false,
+                        animationDuration: Duration.zero,
+                        shape
+                            : MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(32)
+                )
+            )
+        ),
+        onPressed: () {
+          if (currentModel.stepsCount ==
+              currentModel.currentStep) {
+            _con.nextButtonTap();
+            openSecondScreen();
+          } else {
+            _con.nextButtonTap();
+          }
+        },
+        child: Center(
+            child: Text("Далее",
+                style: GoogleFonts.raleway(
+                    textStyle: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18,
+                        // color: Colors.black
+                    )
+                )
+            )
+        )
+    ),)
+    ,
+    )
+    ,
     );
   }
 }
@@ -204,10 +303,18 @@ class ProgressIndicatorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Color(0xFF720D5D),
       child: Row(
         children: [
           Text("Шаг $currentStep из $stepsCount",
-              style: const TextStyle(fontSize: 16, fontFamily: 'Public Sans')),
+              style: GoogleFonts.raleway(
+                  textStyle: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      color: Colors.white70
+                  )
+              )
+          ),
           Container(width: 40),
           Expanded(
             child: ClipRRect(
@@ -215,8 +322,8 @@ class ProgressIndicatorWidget extends StatelessWidget {
               child: Container(
                 child: LinearProgressIndicator(
                   minHeight: 20,
-                  backgroundColor: Colors.black12,
-                  color: Colors.blueGrey,
+                  backgroundColor: Colors.black54,
+                  color: Color(0xFF4E0D3A),
                   value: currentStep / stepsCount,
                 ),
               ),
@@ -280,7 +387,14 @@ class _TimerWidgetState extends State<TimerWidget> {
     return Row(
       children: [
         Text("$minutesStr : $secondsStr",
-            style: const TextStyle(fontSize: 16, fontFamily: 'Public Sans'))
+            style: GoogleFonts.raleway(
+                textStyle: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                    color: Colors.white70
+                )
+            )
+        )
       ],
     );
   }
