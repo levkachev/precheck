@@ -1,7 +1,7 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tests/widgets/test_screen_widget.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class IntroScreenWidget extends StatefulWidget {
   _IntroScreenWidgetState createState() => _IntroScreenWidgetState();
@@ -33,9 +33,7 @@ class _IntroScreenWidgetState extends State<IntroScreenWidget> {
   }
 
   void openTestScreen() {
-    Navigator.of(context).pushAndRemoveUntil(
-        _createRoute(),
-            (route) => false);
+    Navigator.of(context).pushAndRemoveUntil(_createRoute(), (route) => false);
   }
 
   @override
@@ -47,39 +45,51 @@ class _IntroScreenWidgetState extends State<IntroScreenWidget> {
           children: [
             SizedBox(
               width: 500,
-              child: Text("Подтвердите согласие на запись экрана и предоставление данных компании Люкс-тестс",
+              child: Text(
+                  "Подтвердите согласие на запись экрана и предоставление данных компании Люкс-тестс",
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      fontSize: 16, fontFamily: 'Public Sans')),
+                  style: GoogleFonts.raleway(
+                      textStyle: TextStyle(
+                          fontWeight: FontWeight.w500, fontSize: 16))),
+            ),
+            SizedBox(
+              height: 20,
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("Подтверждаю",
-                    style: const TextStyle(
-                        fontSize: 13, fontFamily: 'Public Sans')),
-                Checkbox(value: isButtonEnabled, onChanged: (value) {
-                  isCheckboxValueChanged(value ?? false);
-                })
+                    style: GoogleFonts.raleway(
+                        textStyle: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 13))),
+                Checkbox(
+                    value: isButtonEnabled,
+                    onChanged: (value) {
+                      isCheckboxValueChanged(value ?? false);
+                    })
               ],
+            ),
+            SizedBox(
+              height: 20,
             ),
             SizedBox(
               width: 170,
               height: 30,
               child: ElevatedButton(
-                  onPressed: (){
-                    if (isButtonEnabled) {
-                      openTestScreen();
-                    }
-                  },
-                  child: Text(isButtonEnabled ? "Далее" : "Примите правила",
-                      style: const TextStyle(
-                          fontSize: 16, fontFamily: 'Public Sans')),
+                onPressed: () {
+                  if (isButtonEnabled) {
+                    openTestScreen();
+                  }
+                },
+                child: Text(isButtonEnabled ? "Далее" : "Примите правила",
+                    style: GoogleFonts.raleway(
+                        textStyle: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 16))),
                 style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(isButtonEnabled ? Colors.indigoAccent : Colors.black26),
-                  overlayColor:
-                  MaterialStateProperty.resolveWith((states) {
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      isButtonEnabled ? Colors.indigoAccent : Colors.black26),
+                  overlayColor: MaterialStateProperty.resolveWith((states) {
                     return Colors.transparent;
                   }),
                 ),
