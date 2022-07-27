@@ -2,7 +2,7 @@ import 'dart:io';
 
 class TestModel {
   final TestKind kind;
-  final String testStartedTimestamp;
+  final int testStartedTimestamp;
   final int stepsCount;
   final int currentStep;
   final String title;
@@ -45,7 +45,7 @@ class TestModel {
         this.description = json['description'],
         this.codeSnippet = json['codeSnippet'],
         this.inputModel =
-            InputModel.fromMap(json, TestKind.values.byName(json['kind']));
+            InputModel.fromMap(json['inputModel'], TestKind.values.byName(json['kind']));
 }
 
 abstract class InputModel {
@@ -71,7 +71,8 @@ class ChoisesOutput extends InputModel {
   ChoisesOutput(this.choises);
 
   factory ChoisesOutput.fromMap(Map<String, dynamic> map) {
-    return ChoisesOutput(map['variants']);
+    List<String> stringList = (map['variants'] as List<dynamic>).cast<String>();
+    return ChoisesOutput(stringList);
   }
 }
 

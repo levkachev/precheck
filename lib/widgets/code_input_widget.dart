@@ -14,6 +14,7 @@ class CodeInputWidget extends StatelessWidget {
     this.controller = CodeController(
         language: swift,
         theme: monokaiSublimeTheme,
+        webSpaceFix: false,
         onChange: (text) {
           callback(CodeInputAnswer(text));
           // print(text);
