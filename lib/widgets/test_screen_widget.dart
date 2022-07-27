@@ -12,6 +12,7 @@ import 'package:tests/widgets/code_input_widget.dart';
 import 'package:tests/widgets/multi_choice_widget.dart';
 import 'package:tests/widgets/second_screen.dart';
 import 'package:tests/widgets/text_input_widget.dart';
+import 'package:tests/widgets/timer_widget.dart';
 import 'single_choice_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -42,9 +43,7 @@ class _TestScreenState extends StateMVC {
             (route) => false);
   }
 
-  Widget currentQuestionWidget() {
-    TestModel currentModel = _con.getCurrentModel();
-
+  Widget currentQuestionWidget(TestModel currentModel) {
     Widget currentWidget;
 
     switch (currentModel.kind) {
@@ -77,9 +76,32 @@ class _TestScreenState extends StateMVC {
   }
 
   @override
+  void initState() {
+    _con.getCurrentModel();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    TestModel currentModel = _con.getCurrentModel();
-    return Scaffold(
+    // TestModel currentModel = _con.getCurrentModel();
+
+    StateNew state = _con.stateNew;
+
+    // print(state);
+
+    if (state is LoadingState) {
+       return Center(
+        child: CircularProgressIndicator(),
+      );
+    } else if (state is ErrorState) {
+      var error = (state as ErrorState).error;
+      return Center(
+        child: Text(error),
+      );
+    } else {
+      TestModel currentModel = (state as DataLoadedState).model;
+
+      return Scaffold(
         body: Container(
           color: Color(0xFF720D5D),
           child: Column(
@@ -98,7 +120,7 @@ class _TestScreenState extends StateMVC {
                       Expanded(
                           child: Container(
                             padding: EdgeInsets.only(left: 30),
-                            child: TimerWidget(),
+                            child: TimerWidget(currentModel.testStartedTimestamp),
                           ))
                     ]),
               ),
@@ -167,50 +189,11 @@ class _TestScreenState extends StateMVC {
                       ),
                       Align(
                         alignment: Alignment.bottomLeft,
-                        child: currentQuestionWidget(),
+                        child: currentQuestionWidget(currentModel),
                       ),
                       SizedBox(
                         height: 50,
                       ),
-                      // Expanded(
-                      //   child: Align(
-                      //     alignment: Alignment.bottomCenter,
-                      //     child: SizedBox(
-                      //       width: 200,
-                      //       height: 50,
-                      //       child: ElevatedButton(
-                      //           style: ButtonStyle(
-                      //               backgroundColor:
-                      //               MaterialStateProperty.all<Color>(Colors.brown),
-                      //               overlayColor:
-                      //               MaterialStateProperty.resolveWith((states) {
-                      //                 return Colors.transparent;
-                      //               }),
-                      //               enableFeedback: false,
-                      //               animationDuration: Duration.zero),
-                      //           onPressed: () {
-                      //             if (currentModel.stepsCount ==
-                      //                 currentModel.currentStep) {
-                      //               _con.nextButtonTap();
-                      //               openSecondScreen();
-                      //             } else {
-                      //               _con.nextButtonTap();
-                      //             }
-                      //           },
-                      //           child: Center(
-                      //               child: Text("Далее",
-                      //                   style: GoogleFonts.raleway(
-                      //                       textStyle: TextStyle(
-                      //                           fontWeight: FontWeight.w500,
-                      //                           fontSize: 18
-                      //                       )
-                      //                   )
-                      //               )
-                      //           )
-                      //       ),
-                      //     ),
-                      //   ),
-                      // )
                     ],
                   ),
                 ),
@@ -219,54 +202,56 @@ class _TestScreenState extends StateMVC {
           ),
         ),
         floatingActionButton: Align(
-            alignment: Alignment.bottomCenter,
-            child: SizedBox(
-                width: 200,
-                height: 60,
-                child: ElevatedButton(
-                    style: ButtonStyle(
-                        shadowColor: MaterialStateProperty.all<Color>(
-                            Colors.black),
-                        backgroundColor:
-                        MaterialStateProperty.all<Color>(Color(0xFF720D5D)),
-                        overlayColor:
-                        MaterialStateProperty.resolveWith((states) {
-                          return Colors.transparent;
-                        }),
-                        enableFeedback: false,
-                        animationDuration: Duration.zero,
-                        shape
-                            : MaterialStateProperty.all<RoundedRectangleBorder>(
+          alignment: Alignment.bottomCenter,
+          child: SizedBox(
+            width: 200,
+            height: 60,
+            child: ElevatedButton(
+                style: ButtonStyle(
+                    shadowColor: MaterialStateProperty.all<Color>(
+                        Colors.black),
+                    backgroundColor:
+                    MaterialStateProperty.all<Color>(Color(0xFF720D5D)),
+                    overlayColor:
+                    MaterialStateProperty.resolveWith((states) {
+                      return Colors.transparent;
+                    }),
+                    enableFeedback: false,
+                    animationDuration: Duration.zero,
+                    shape
+                        : MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(32)
-                )
-            )
-        ),
-        onPressed: () {
-          if (currentModel.stepsCount ==
-              currentModel.currentStep) {
-            _con.nextButtonTap();
-            openSecondScreen();
-          } else {
-            _con.nextButtonTap();
-          }
-        },
-        child: Center(
-            child: Text("Далее",
-                style: GoogleFonts.raleway(
-                    textStyle: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18,
-                        // color: Colors.black
+                            borderRadius: BorderRadius.circular(32)
+                        )
+                    )
+                ),
+                onPressed: () {
+                  if (currentModel.stepsCount ==
+                      currentModel.currentStep) {
+                    _con.nextButtonTap();
+                    openSecondScreen();
+                  } else {
+                    _con.nextButtonTap();
+                  }
+                },
+                child: Center(
+                    child: Text("Далее",
+                        style: GoogleFonts.raleway(
+                            textStyle: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18,
+                              // color: Colors.black
+                            )
+                        )
                     )
                 )
-            )
+            ),)
+          ,
         )
-    ),)
-    ,
-    )
-    ,
-    );
+        ,
+      );
+    }
+
   }
 }
 
@@ -276,6 +261,7 @@ class CodeFieldWidget extends StatelessWidget {
   final codeController = CodeController(
     language: swift,
     theme: monokaiSublimeTheme,
+    webSpaceFix: false
   );
 
   CodeFieldWidget(String text) {
@@ -331,71 +317,6 @@ class ProgressIndicatorWidget extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class TimerWidget extends StatefulWidget {
-  // int startTimestamp;
-  // TimerWidget(this.startTimestamp);
-
-  @override
-  _TimerWidgetState createState() => _TimerWidgetState();
-}
-
-class _TimerWidgetState extends State<TimerWidget> {
-  late Timer? timer;
-
-  final stopwatch = Stopwatch();
-
-  int minutes = 0;
-  int seconds = 0;
-
-  int milliseconds = 0;
-
-  void callback(Timer timer) {
-    if (milliseconds != stopwatch.elapsedMilliseconds) {
-      milliseconds = stopwatch.elapsedMilliseconds;
-      setState(() {
-        final int hundreds = (milliseconds / 10).truncate();
-        seconds = (hundreds / 100).truncate();
-        minutes = (seconds / 60).truncate();
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    timer = Timer.periodic(Duration(milliseconds: 30), callback);
-    stopwatch.start();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    timer = null;
-    stopwatch.stop();
-    stopwatch.reset();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    String minutesStr = (minutes % 60).toString().padLeft(2, '0');
-    String secondsStr = (seconds % 60).toString().padLeft(2, '0');
-    return Row(
-      children: [
-        Text("$minutesStr : $secondsStr",
-            style: GoogleFonts.raleway(
-                textStyle: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16,
-                    color: Colors.white70
-                )
-            )
-        )
-      ],
     );
   }
 }
