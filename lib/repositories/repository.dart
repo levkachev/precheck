@@ -5,6 +5,8 @@ import '../models/test-model.dart';
 
 const String SERVER = "https://jsonplaceholder.typicode.com";
 
+// https://enable-cors.org/server.html - если будут проблемы с доступом к методу - httpXMLRequestError - включить CORS
+
 class Repository {
   Future<TestModel> fetchTest() async {
     final url = Uri.parse("$SERVER/users");

@@ -4,14 +4,18 @@ import 'package:tests/widgets/single_choice_widget.dart';
 import 'package:tests/widgets/test_screen_widget.dart';
 
 class MultiChoiceWidget extends StatefulWidget {
-  List<ChoiceModel> model;
+  late List<ChoiceModel> model;
 
-  final Callback callback;
+  late Callback callback;
 
-  MultiChoiceWidget(List<String> items, Callback callback)
-      : this.model =
-            items.map((element) => ChoiceModel(element, false)).toList(),
-        this.callback = callback;
+  MultiChoiceWidget(Map<String, String> items, Callback callback) {
+    this.callback = callback;
+    List<ChoiceModel> list = [];
+    items.forEach((id, title) {
+      list.add(ChoiceModel(title, id, false));
+    });
+    this.model = list;
+  }
 
   @override
   State<StatefulWidget> createState() => _MultiChoiceWidgetState();
@@ -20,12 +24,12 @@ class MultiChoiceWidget extends StatefulWidget {
     var newModel = model.map((element) {
       final currentIndex = model.indexOf(element);
       if (currentIndex == index) {
-        return ChoiceModel(element.title, !element.isSelected);
+        return ChoiceModel(element.title, element.id, !element.isSelected);
       } else {
         return element;
       }
     });
-    callback(MultiChoiceAnswer(newModel.where((element) => element.isSelected).map((e) => e.title).toList()));
+    callback(MultiChoiceAnswer(newModel.where((element) => element.isSelected).map((e) => e.id).toList()));
     model = newModel.toList();
   }
 }

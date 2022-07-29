@@ -66,12 +66,12 @@ abstract class InputModel {
 }
 
 class ChoisesOutput extends InputModel {
-  final List<String> choises;
+  final Map<String, String> choises;
 
   ChoisesOutput(this.choises);
 
   factory ChoisesOutput.fromMap(Map<String, dynamic> map) {
-    List<String> stringList = (map['variants'] as List<dynamic>).cast<String>();
+    Map<String, String> stringList = (map['variants'] as Map<dynamic, dynamic>).cast<String, String>();
     return ChoisesOutput(stringList);
   }
 }
