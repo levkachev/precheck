@@ -1,91 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:tests/models/stage_model.dart';
 import 'package:tests/models/test-model.dart';
 import 'package:tests/repositories/repository.dart';
 
 class TestController extends ControllerMVC {
-  var text = "main screen MVC";
-
   final Repository repo = Repository();
 
   var currentStep = 1;
 
-  StateNew stateNew = LoadingState();
+  ScreenState stateNew;
 
-  Object? currentAnswer = null;
+  Object? currentAnswer;
 
-  List<String> answers = [];
+  QuestionModel? currentTest;
 
-  TestModel? currentTest;
-
-  // List<TestModel> testItems = [
-  //   TestModel.rawInit(
-  //       TestKind.singleChoice,
-  //       "123123",
-  //       4,
-  //       1,
-  //       "Что будет выведено в консоль при выполнении следующего блока кода?",
-  //       "Выберите один ответ из перечисленных",
-  //       ChoisesOutput(["4", "2", "3", "1", "no one from variants are true"]),
-  //     "if a == 4 \n  print('a = 4') \n else print('a != 4') \n"
-  //   ),
-  //   TestModel.rawInit(
-  //       TestKind.multiChoice,
-  //       "123123",
-  //       4,
-  //       2,
-  //       "Какие варианты из нижеперечисленных соответствуют действительности?",
-  //       "Выберите несколько вариантов ответа",
-  //       ChoisesOutput(["1", "2", "3"]),
-  //     "if a == 4 print('a = 4') else print('a!=4')"
-  //   ),
-  //   TestModel.rawInit(
-  //       TestKind.textInput,
-  //       "123123",
-  //       4,
-  //       3,
-  //       "Что будет выведено в консоль при выполнении следующего блока кода?",
-  //       "Введите ответ в текстовое поле",
-  //       TextOutput("Введите ответ.."),
-  //     "if a == 4 print('a = 4') else print('a!=4')"
-  //   ),
-  //   TestModel.rawInit(
-  //       TestKind.codeInput,
-  //       "123123",
-  //       4,
-  //       4,
-  //       "Каким образом данный блок кода можно отрефакторить, чтобы значения вывелись в обратном порядке?",
-  //       "Исправьте заготовленный код",
-  //       CodeOutput("if a == 5 { \n    print('a = 5') \n}")
-  //   )
-  // ];
+  StageModel initialModel;
 
   void nextButtonTap() {
     if (currentAnswer is CodeInputAnswer) {
-      print((currentAnswer as CodeInputAnswer).answer);
-      answers.add((currentAnswer as CodeInputAnswer).answer);
+      postAnswer((currentAnswer as CodeInputAnswer).toJson());
     } else if (currentAnswer is TextInputAnswer) {
-      print((currentAnswer as TextInputAnswer).answer);
-      answers.add((currentAnswer as TextInputAnswer).answer);
+      postAnswer((currentAnswer as TextInputAnswer).toJson());
     } else if (currentAnswer is SingleChoiceAnswer) {
-      print((currentAnswer as SingleChoiceAnswer).answer);
-      answers.add((currentAnswer as SingleChoiceAnswer).answer);
+      postAnswer((currentAnswer as SingleChoiceAnswer).toJson());
     } else if (currentAnswer is MultiChoiceAnswer) {
-      print((currentAnswer as MultiChoiceAnswer).answers);
-      answers.add((currentAnswer as MultiChoiceAnswer).answers.toString());
+      postAnswer((currentAnswer as MultiChoiceAnswer).toJson());
     }
-    // if (currentStep < testItems.length) {
-      setState(() { currentStep++; });
-    // }
+      setState(() { stateNew = LoadingState(); });
   }
 
   void setVariantForItem(Object? variant) {
     currentAnswer = variant;
   }
 
-  void getCurrentModel() async {
+  void postAnswer(Map<String, dynamic> answer) async {
     try {
-      final model = await repo.fetchTest();
+      StageModel model = await repo.postAnswer(answer);
       setState(() { stateNew = DataLoadedState(model); });
     } catch (error) {
       setState(() { stateNew = ErrorState(error.toString()); });
@@ -98,23 +49,23 @@ class TestController extends ControllerMVC {
   // в данном случае мы реализуем паттерн Singleton
   // то есть будет существовать единственный экземпляр
   // класса HomeController
-  factory TestController() => _this ??= TestController._();
+  factory TestController(StageModel initialModel) => _this ??= TestController._(initialModel, DataLoadedState(initialModel));
 
-  TestController._();
+  TestController._(this.initialModel, this.stateNew);
 
   static TestController? _this;
 }
 
-abstract class StateNew {}
+abstract class ScreenState {}
 
-class LoadingState extends StateNew {}
+class LoadingState extends ScreenState {}
 
-class DataLoadedState extends StateNew {
-  final TestModel model;
+class DataLoadedState extends ScreenState {
+  final StageModel model;
   DataLoadedState(this.model);
 }
 
-class ErrorState extends StateNew {
+class ErrorState extends ScreenState {
   final String error;
   ErrorState(this.error);
 }

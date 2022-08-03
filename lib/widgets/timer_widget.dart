@@ -15,6 +15,8 @@ class _TimerWidgetState extends State<TimerWidget> {
 
   final stopwatch = Stopwatch();
 
+  final int timerRefreshDuration = 100;
+
   // int initialMilliseconds = DateTime.now().millisecondsSinceEpoch - widget.startTimestamp;
   late int minutes;
   late int seconds;
@@ -33,7 +35,7 @@ class _TimerWidgetState extends State<TimerWidget> {
   }
 
   void callback(Timer timer) {
-      milliseconds += 30;
+      milliseconds += timerRefreshDuration;
       setState(() {
         final int sec = (milliseconds / 1000).truncate();
         minutes = (sec / 60).toInt();
@@ -43,7 +45,7 @@ class _TimerWidgetState extends State<TimerWidget> {
 
   @override
   void initState() {
-    timer = Timer.periodic(Duration(milliseconds: 30), callback);
+    timer = Timer.periodic(Duration(milliseconds: timerRefreshDuration), callback);
     stopwatch.start();
     super.initState();
   }

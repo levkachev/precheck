@@ -1,0 +1,95 @@
+[
+  {
+    "startAt": 45678490324,
+    "stepsCount": 4,
+    "currentStep": 1,
+    "question": {
+      "id":"qweqwe",
+      "kind": "multiChoice",
+      "title": "What does the following Swift code output?",
+      "description": "Select all suitable variants",
+      "codeSnippet": "определиться c форматом, подойдет ли \n",
+      "inputModel": {
+        "variants": {
+          "1": "21",
+          "2": "12",
+          "3": "Doestn't print anything",
+          "4": "1",
+          "5": "2"
+        }
+      }
+    }
+  },
+  {
+    "startAt": 45678490324,
+    "stepsCount": 4,
+    "currentStep": 2,
+    "question": {
+      "id":"qweqwe",
+      "kind": "textInput",
+      "title": "What does the following Swift code output?",
+      "description": "Select all suitable variants",
+      "codeSnippet": "определиться c форматом, подойдет ли \n",
+      "inputModel": {
+        "placeholder": "Введите результат"
+      }
+    }
+  },
+  {
+    "startAt": 45678490324,
+    "stepsCount": 4,
+    "currentStep": 3,
+    "kind": "codeInput",
+    "question": {
+      "title": "What does the following Swift code output?",
+      "description": "Select all suitable variants",
+      "codeSnippet": "определиться c форматом, подойдет ли \n",
+      "inputModel": {
+        "template": "Введите результат"
+      }
+    }
+  },
+  {
+    "startAt": 45678490324,
+    "stepsCount": 4,
+    "currentStep": 4,
+    "kind": "singleChoice",
+    "question": {
+      "id":"qweqwe",
+      "title": "What does the following Swift code output?",
+      "description": "Select all suitable variants",
+      "codeSnippet": "определиться c форматом, подойдет ли \n",
+      "inputModel": {
+        "variants": {
+          "1": "21",
+          "2": "12",
+          "3": "Doestn't print anything",
+          "4": "1",
+          "5": "2"
+        }
+      }
+    }
+  }
+]
+
+
+
+
+{
+    "kind": "finish",
+    "model": {
+    "title": "12312321",
+    "description": "1323333"
+  }
+}
+
+
+
+
+{
+    "kind": "start",
+    "model": {
+    "title": "12312321",
+    "description": "1323333"
+  }
+}

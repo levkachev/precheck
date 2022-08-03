@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tests/models/models.dart';
+import 'package:tests/models/stage_model.dart';
+import 'package:tests/models/test-model.dart';
+import 'package:tests/repositories/repository.dart';
 import 'package:tests/route_names.dart';
 import 'package:tests/widgets/intro_screen_widget.dart';
 import 'package:tests/widgets/second_screen.dart';
@@ -7,83 +10,18 @@ import 'package:tests/widgets/test_screen_widget.dart';
 import 'widgets/test_review.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
-void main() {
-  setUrlStrategy(PathUrlStrategy());
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  static SkillsModel skillsModel = SkillsModel(skills: [
-    SkillModel(
-        title: "Swift", score: 23, companyAverage: 33, industryAverage: 44
-    ),
-    SkillModel(
-        title: "objc", score: 66, companyAverage: 33, industryAverage: 44
-    ),
-     SkillModel(
-        title: "arch", score: 98, companyAverage: 33, industryAverage: 44
-    ),
-    SkillModel(
-        title: "algorithmc", score: 42, companyAverage: 33, industryAverage: 44
-    ),
-  ], totalScore: 99);
-
-  static UserModel userModel = UserModel(
-      name: "name",
-      location: "location",
-      testName: "testName",
-      testingDate: "testingDate");
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      // initialRoute: RoutesName.MAIN_PAGE,
-      // onGenerateRoute: (settings) {
-      //   if (settings.name == RoutesName.MAIN_PAGE) {
-      //     return MaterialPageRoute(
-      //       builder: (context) {
-      //         return TestScreenWidget(
-      //             model: TestSummaryScreenArguments(userModel, skillsModel)
-      //         );
-      //       }
-      //     );
-      //   } else if (settings.name == RoutesName.DETAILS_PAGE) {
-      //     final title = settings.arguments as String;
-      //     return MaterialPageRoute(
-      //         builder: (context) {
-      //           return SecondPage(title: title);
-      //         }
-      //     );
-      //   } else {
-      //     return MaterialPageRoute(
-      //         builder: (context) {
-      //           return TestScreenWidget(
-      //               model: TestSummaryScreenArguments(userModel, skillsModel)
-      //           );
-      //         }
-      //     );
-      //   }
-      // },
-      theme: ThemeData(
-        // fontFamily: 'Open Sans',
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: IntroScreenWidget(),
-    );
+void main() async {
+  Repository repo = Repository();
+  StageModel model = await repo.fetchStage();
+  switch (model.kind) {
+    case StageKind.start:
+      return runApp(MaterialApp(home: IntroScreenWidget(model),
+        debugShowCheckedModeBanner: false,));
+    case StageKind.finish:
+      return runApp(MaterialApp(home: SecondPage(title: (model.stage as StartFinishStage).description,),
+        debugShowCheckedModeBanner: false,));
+    case StageKind.test:
+      return runApp(MaterialApp(home: TestScreen(model), debugShowCheckedModeBanner: false,));
   }
 }
 
