@@ -4,22 +4,23 @@ import 'package:tests/widgets/test_screen_widget.dart';
 
 class SingleChoiceQuestionWidget extends StatefulWidget {
   late List<ChoiceModel> model;
-
+  late String id;
   late Callback callback;
 
-  SingleChoiceQuestionWidget(Map<String, String> items, Callback callback) {
+  SingleChoiceQuestionWidget(Map<String, String> items, String id, Callback callback) {
     this.callback = callback;
     List<ChoiceModel> list = [];
     items.forEach((id, title) {
       list.add(ChoiceModel(title, id, false));
     });
+    this.id = id;
     this.model = list;
   }
   void choiceSelected(int index) {
     var newModel = model.map((element) {
       final currentIndex = model.indexOf(element);
       if (currentIndex == index) {
-        callback(SingleChoiceAnswer(element.id));
+        callback(SingleChoiceAnswer(element.id, id));
         return ChoiceModel(element.title, element.id, true);
       } else {
         return ChoiceModel(element.title, element.id, false);

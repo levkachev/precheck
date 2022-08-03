@@ -10,9 +10,11 @@ class TextInputWidget extends StatelessWidget {
 
   final Callback callback;
 
+  final String id;
+
   final controller = TextEditingController();
 
-  TextInputWidget(this.placeholder, this.callback, {Key? key}) : super(key: key);
+  TextInputWidget(this.placeholder, this.callback, this.id, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class TextInputWidget extends StatelessWidget {
       ),
       child: TextField(
         controller: controller,
-        onChanged: (text) => callback(TextInputAnswer(text)),
+        onChanged: (text) => callback(TextInputAnswer(text, id)),
         decoration: InputDecoration(
           hintText: placeholder,
           disabledBorder: null,

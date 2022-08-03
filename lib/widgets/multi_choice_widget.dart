@@ -5,16 +5,17 @@ import 'package:tests/widgets/test_screen_widget.dart';
 
 class MultiChoiceWidget extends StatefulWidget {
   late List<ChoiceModel> model;
-
+  late String id;
   late Callback callback;
 
-  MultiChoiceWidget(Map<String, String> items, Callback callback) {
+  MultiChoiceWidget(Map<String, String> items, Callback callback, String id) {
     this.callback = callback;
     List<ChoiceModel> list = [];
     items.forEach((id, title) {
       list.add(ChoiceModel(title, id, false));
     });
     this.model = list;
+    this.id = id;
   }
 
   @override
@@ -29,7 +30,7 @@ class MultiChoiceWidget extends StatefulWidget {
         return element;
       }
     });
-    callback(MultiChoiceAnswer(newModel.where((element) => element.isSelected).map((e) => e.id).toList()));
+    callback(MultiChoiceAnswer(newModel.where((element) => element.isSelected).map((e) => e.id).toList(), id));
     model = newModel.toList();
   }
 }

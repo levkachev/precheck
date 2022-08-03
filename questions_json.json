@@ -1,61 +1,69 @@
 [
   {
-    "kind": "multiChoice",
-    "testStartAt": 45678490324,
+    "startAt": 45678490324,
     "stepsCount": 4,
     "currentStep": 1,
-    "title": "What does the following Swift code output?",
-    "description": "Select all suitable variants",
-    "codeSnippet": "определиться c форматом, подойдет ли \n",
-    "inputModel": {
-      "variants": {
-            "1": "21",
-            "2": "12",
-            "3": "Doestn't print anything",
-            "4": "1",
-            "5": "2"
+    "question": {
+      "kind": "multiChoice",
+      "title": "What does the following Swift code output?",
+      "description": "Select all suitable variants",
+      "codeSnippet": "определиться c форматом, подойдет ли \n",
+      "inputModel": {
+        "variants": {
+          "1": "21",
+          "2": "12",
+          "3": "Doestn't print anything",
+          "4": "1",
+          "5": "2"
+        }
       }
     }
   },
   {
-    "kind": "textInput",
-    "testStartAt": 45678490324,
+    "startAt": 45678490324,
     "stepsCount": 4,
     "currentStep": 2,
-    "title": "What does the following Swift code output?",
-    "description": "Select all suitable variants",
-    "codeSnippet": "определиться c форматом, подойдет ли \n",
-    "inputModel": {
-      "placeholder": "Введите результат"
+    "question": {
+      "kind": "textInput",
+      "title": "What does the following Swift code output?",
+      "description": "Select all suitable variants",
+      "codeSnippet": "определиться c форматом, подойдет ли \n",
+      "inputModel": {
+        "placeholder": "Введите результат"
+      }
     }
   },
   {
-    "kind": "codeInput",
-    "testStartAt": 45678490324,
+    "startAt": 45678490324,
     "stepsCount": 4,
     "currentStep": 3,
-    "title": "What does the following Swift code output?",
-    "description": "Select all suitable variants",
-    "codeSnippet": "определиться c форматом, подойдет ли \n",
-    "inputModel": {
-      "template": "Введите результат"
+    "kind": "codeInput",
+    "question": {
+      "title": "What does the following Swift code output?",
+      "description": "Select all suitable variants",
+      "codeSnippet": "определиться c форматом, подойдет ли \n",
+      "inputModel": {
+        "template": "Введите результат"
+      }
     }
   },
   {
-    "kind": "singleChoice",
-    "testStartAt": 45678490324,
+    "startAt": 45678490324,
     "stepsCount": 4,
     "currentStep": 4,
-    "title": "What does the following Swift code output?",
-    "description": "Select all suitable variants",
-    "codeSnippet": "определиться c форматом, подойдет ли \n",
-    "inputModel": {
-      "variants": {
-            "1": "21",
-            "2": "12",
-            "3": "Doestn't print anything",
-            "4": "1",
-            "5": "2"
+    "kind": "singleChoice",
+    "question": {
+      "title": "What does the following Swift code output?",
+      "description": "Select all suitable variants",
+      "codeSnippet": "определиться c форматом, подойдет ли \n",
+      "inputModel": {
+        "variants": {
+          "1": "21",
+          "2": "12",
+          "3": "Doestn't print anything",
+          "4": "1",
+          "5": "2"
+        }
       }
     }
   }

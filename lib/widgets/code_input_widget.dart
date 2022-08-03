@@ -8,19 +8,21 @@ import 'package:tests/widgets/test_screen_widget.dart';
 
 class CodeInputWidget extends StatelessWidget {
   late CodeController controller;
+  late String id;
 
-  CodeInputWidget(String text, Callback callback) {
+  CodeInputWidget(String text, String id, Callback callback) {
     // codeController.text = text;
     this.controller = CodeController(
         language: swift,
         theme: monokaiSublimeTheme,
         webSpaceFix: false,
         onChange: (text) {
-          callback(CodeInputAnswer(text));
+          callback(CodeInputAnswer(text, id));
           // print(text);
         },
       text: text
     );
+    this.id = id;
   }
 
   @override
