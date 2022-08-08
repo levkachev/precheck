@@ -5,10 +5,10 @@ import 'package:tests/widgets/test_screen_widget.dart';
 
 class MultiChoiceWidget extends StatefulWidget {
   late List<ChoiceModel> model;
-  late String id;
+  late int id;
   late Callback callback;
 
-  MultiChoiceWidget(Map<String, String> items, Callback callback, String id) {
+  MultiChoiceWidget(Map<String, String> items, Callback callback, int id) {
     this.callback = callback;
     List<ChoiceModel> list = [];
     items.forEach((id, title) {

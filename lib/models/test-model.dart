@@ -4,20 +4,20 @@ import 'dart:io';
 import 'package:tests/models/stage_model.dart';
 
 class TestModel extends Stage {
-  final int testStartedTimestamp;
+  final DateTime testStartedTimestamp;
   final int stepsCount;
   final int currentStep;
   final QuestionModel question;
 
   TestModel.fromJson(Map<String, dynamic> json)
-      : this.testStartedTimestamp = json['startAt'],
+      : this.testStartedTimestamp = DateTime.parse(json['startAt']),
         this.stepsCount = json['stepsCount'],
         this.currentStep = json['currentStep'],
-        this.question = QuestionModel.fromJson(json["question"]);
+        this.question = QuestionModel.fromJson(json["currentQuestion"]);
 }
 
 class QuestionModel {
-  final String id;
+  final int id;
   final TestKind kind;
   final String title;
   final String description;
@@ -88,7 +88,7 @@ enum TestKind { multiChoice, textInput, codeInput, singleChoice }
 class SingleChoiceAnswer {
   final String answer;
 
-  final String id;
+  final int id;
 
   SingleChoiceAnswer(this.answer, this.id);
 
@@ -99,7 +99,7 @@ class SingleChoiceAnswer {
 class MultiChoiceAnswer {
   final List<String> answers;
 
-  final String id;
+  final int id;
 
   MultiChoiceAnswer(this.answers, this.id);
 
@@ -110,7 +110,7 @@ class MultiChoiceAnswer {
 class TextInputAnswer {
   final String answer;
 
-  final String id;
+  final int id;
 
   TextInputAnswer(this.answer, this.id);
 
@@ -121,7 +121,7 @@ class TextInputAnswer {
 class CodeInputAnswer {
   final String answer;
 
-  final String id;
+  final int id;
 
   CodeInputAnswer(this.answer, this.id);
 

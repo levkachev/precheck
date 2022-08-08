@@ -21,19 +21,20 @@ typedef void Callback(Object answer);
 
 class TestScreen extends StatefulWidget {
   StageModel initialQuestion;
+  String testId;
 
-  TestScreen(this.initialQuestion);
+  TestScreen(this.initialQuestion, this.testId);
 
   @override
-  _TestScreenState createState() => _TestScreenState(initialQuestion);
+  _TestScreenState createState() => _TestScreenState(initialQuestion, testId);
 }
 
 class _TestScreenState extends StateMVC {
   late TestController _con;
 
-  _TestScreenState(StageModel initialQuestion) : super(TestController(initialQuestion)) {
+  _TestScreenState(StageModel initialQuestion, String testId) : super(TestController(initialQuestion, testId)) {
     // получаем ссылку на наш контроллер
-    _con = TestController(initialQuestion);
+    _con = TestController(initialQuestion, testId);
   }
 
   void callback(Object answer) {
@@ -132,7 +133,7 @@ class _TestScreenState extends StateMVC {
                         Expanded(
                             child: Container(
                               padding: EdgeInsets.only(left: 30),
-                              child: TimerWidget(currentModel.testStartedTimestamp),
+                              child: TimerWidget(currentModel.testStartedTimestamp.millisecondsSinceEpoch),
                             ))
                       ]),
                 ),
@@ -331,30 +332,3 @@ class ProgressIndicatorWidget extends StatelessWidget {
     );
   }
 }
-
-/*
-return Scaffold(
-body: Center(
-child: Row(
-children: [
-Expanded(
-child: Center(child: Text(currentModel.title)),
-),
-if (currentModel.currentStep != currentModel.stepsCount)...[
-Expanded(
-child: Center(
-child: SizedBox(
-width: 100,
-child: ElevatedButton(
-onPressed: () { _con.nextButtonTap(); },
-child: Text('Next question'),
-),
-),
-),
-),
-]
-],
-),
-),
-);
- */

@@ -10,9 +10,11 @@ class StartController extends ControllerMVC {
 
   ScreenState stateNew;
 
-  factory StartController(StageModel initialModel) => _this ??= StartController._(DataLoadedState(initialModel));
+  String testId;
 
-  StartController._(this.stateNew);
+  factory StartController(StageModel initialModel, String testId) => _this ??= StartController._(DataLoadedState(initialModel), testId);
+
+  StartController._(this.stateNew, this.testId);
 
   static StartController? _this;
 
@@ -23,7 +25,7 @@ class StartController extends ControllerMVC {
 
   void getStage() async {
     try {
-      StageModel model = await repo.postAnswer(EulaAcceptance().toJson());
+      StageModel model = await repo.postAnswer(EulaAcceptance().toJson(), testId);
 
      setState(() { stateNew = DataLoadedState(model); });
 

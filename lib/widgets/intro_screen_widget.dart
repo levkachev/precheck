@@ -12,9 +12,11 @@ import '../models/stage_model.dart';
 class IntroScreenWidget extends StatefulWidget {
   final StageModel model;
 
-  IntroScreenWidget(this.model);
+  String testId;
 
-  _IntroScreenWidgetState createState() => _IntroScreenWidgetState(model);
+  IntroScreenWidget(this.model, this.testId);
+
+  _IntroScreenWidgetState createState() => _IntroScreenWidgetState(model, testId);
 }
 
 class _IntroScreenWidgetState extends StateMVC {
@@ -27,13 +29,13 @@ class _IntroScreenWidgetState extends StateMVC {
     setState(() {});
   }
 
-  _IntroScreenWidgetState(StageModel model) : super(StartController(model)) {
-    _con = StartController(model);
+  _IntroScreenWidgetState(StageModel model, String testId) : super(StartController(model, testId)) {
+    _con = StartController(model, testId);
   }
 
   Route _createRoute(StageModel model) {
     return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => TestScreen(model),
+      pageBuilder: (context, animation, secondaryAnimation) => TestScreen(model, _con.testId),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);
         const end = Offset.zero;

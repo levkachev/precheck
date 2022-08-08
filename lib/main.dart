@@ -9,19 +9,25 @@ import 'package:tests/widgets/second_screen.dart';
 import 'package:tests/widgets/test_screen_widget.dart';
 import 'widgets/test_review.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
+import 'dart:html';
 
 void main() async {
   Repository repo = Repository();
-  StageModel model = await repo.fetchStage();
+  var uri = Uri.dataFromString(window.location.href);
+  String testId = uri.pathSegments.last;
+  if (testId.isEmpty) {
+    testId = "fbc4c0f0-1ee3-48af-b623-f007e82194db";
+  }
+  StageModel model = await repo.fetchStage(testId);
   switch (model.kind) {
     case StageKind.start:
-      return runApp(MaterialApp(home: IntroScreenWidget(model),
+      return runApp(MaterialApp(home: IntroScreenWidget(model, testId),
         debugShowCheckedModeBanner: false,));
     case StageKind.finish:
       return runApp(MaterialApp(home: SecondPage(title: (model.stage as StartFinishStage).description,),
         debugShowCheckedModeBanner: false,));
     case StageKind.test:
-      return runApp(MaterialApp(home: TestScreen(model), debugShowCheckedModeBanner: false,));
+      return runApp(MaterialApp(home: TestScreen(model, testId), debugShowCheckedModeBanner: false,));
   }
 }
 

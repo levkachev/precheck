@@ -4,24 +4,13 @@ import 'dart:convert';
 import '../models/stage_model.dart';
 import '../models/test-model.dart';
 
-const String SERVER = "https://jsonplaceholder.typicode.com";
+const String SERVER = "https://precheck-api.herokuapp.com";
 
 // https://enable-cors.org/server.html - если будут проблемы с доступом к методу - httpXMLRequestError - включить CORS
 
 class Repository {
-  Future<TestModel> fetchTest() async {
-    final url = Uri.parse("$SERVER/users");
-    final response = await http.get(url);
-
-    if (response.statusCode == 200) {
-      return TestModel.fromJson(json.decode(response.body));
-    } else {
-      throw Exception("response");
-    }
-  }
-
-  Future<StageModel> fetchStage() async {
-    final url = Uri.parse("$SERVER/stage");
+  Future<StageModel> fetchStage(String testId) async {
+    final url = Uri.parse("$SERVER/api/v1/test/$testId");
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -31,8 +20,8 @@ class Repository {
     }
   }
 
-  Future<StageModel> postAnswer(Map<String, dynamic> answer) async {
-    final url = Uri.parse("$SERVER/stage");
+  Future<StageModel> postAnswer(Map<String, dynamic> answer, String testId) async {
+    final url = Uri.parse("$SERVER/api/v1/test/$testId");
 
     final response = await http.post(url, body: jsonEncode(answer));
 
@@ -47,5 +36,5 @@ class Repository {
 class EulaAcceptance {
   final isEulaAccepted = true;
   Map<String, dynamic> toJson() =>
-      { 'isEulaAccepted': isEulaAccepted.toString() };
+      { 'isEulaAccepted': isEulaAccepted };
  }
