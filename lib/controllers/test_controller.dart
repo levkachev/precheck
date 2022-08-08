@@ -17,6 +17,8 @@ class TestController extends ControllerMVC {
 
   StageModel initialModel;
 
+  String testId;
+
   void nextButtonTap() {
     if (currentAnswer is CodeInputAnswer) {
       postAnswer((currentAnswer as CodeInputAnswer).toJson());
@@ -36,7 +38,7 @@ class TestController extends ControllerMVC {
 
   void postAnswer(Map<String, dynamic> answer) async {
     try {
-      StageModel model = await repo.postAnswer(answer);
+      StageModel model = await repo.postAnswer(answer, testId);
       setState(() { stateNew = DataLoadedState(model); });
     } catch (error) {
       setState(() { stateNew = ErrorState(error.toString()); });
@@ -49,9 +51,9 @@ class TestController extends ControllerMVC {
   // в данном случае мы реализуем паттерн Singleton
   // то есть будет существовать единственный экземпляр
   // класса HomeController
-  factory TestController(StageModel initialModel) => _this ??= TestController._(initialModel, DataLoadedState(initialModel));
+  factory TestController(StageModel initialModel, String testId) => _this ??= TestController._(initialModel, DataLoadedState(initialModel), testId);
 
-  TestController._(this.initialModel, this.stateNew);
+  TestController._(this.initialModel, this.stateNew, this.testId);
 
   static TestController? _this;
 }

@@ -10,7 +10,7 @@ class TextInputWidget extends StatelessWidget {
 
   final Callback callback;
 
-  final String id;
+  final int id;
 
   final controller = TextEditingController();
 
