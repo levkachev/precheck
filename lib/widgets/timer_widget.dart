@@ -27,9 +27,7 @@ class _TimerWidgetState extends State<TimerWidget> {
     int millisecondsSinceNow = DateTime.now().millisecondsSinceEpoch - startTimestamp;
     int secondsSinceNow = millisecondsSinceNow ~/ 1000;
 
-    print(DateTime.now().millisecondsSinceEpoch);
-
-    minutes = (secondsSinceNow / 60).toInt();
+    minutes = secondsSinceNow ~/ 60;
     seconds = secondsSinceNow - minutes * 60;
     milliseconds = millisecondsSinceNow;
   }
@@ -38,7 +36,7 @@ class _TimerWidgetState extends State<TimerWidget> {
       milliseconds += timerRefreshDuration;
       setState(() {
         final int sec = (milliseconds / 1000).truncate();
-        minutes = (sec / 60).toInt();
+        minutes = sec ~/ 60;
         seconds = sec - minutes * 60;
       });
   }

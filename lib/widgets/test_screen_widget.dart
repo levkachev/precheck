@@ -116,13 +116,13 @@ class _TestScreenState extends StateMVC {
 
         return Scaffold(
           body: Container(
-            color: Color(0xFF720D5D),
+            color: const Color(0xFF720D5D),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   child: Row(
                       children: [
                         Expanded(
@@ -132,8 +132,8 @@ class _TestScreenState extends StateMVC {
                         ),
                         Expanded(
                             child: Container(
-                              padding: EdgeInsets.only(left: 30),
-                              child: TimerWidget(currentModel.testStartedTimestamp.millisecondsSinceEpoch),
+                              padding: const EdgeInsets.only(left: 30),
+                              child: TimerWidget(currentModel.testStartedTimestamp),
                             ))
                       ]),
                 ),
