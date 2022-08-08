@@ -11,7 +11,7 @@ class SecondPage extends StatelessWidget {
       body: Center(
         child: SizedBox(
           child: Text(
-            "Спасибо! В ближайшее время с вами свяжется наш hr-специалист и вы получите обратную связь по результатам теста",
+            title,
             style: GoogleFonts.raleway(
                 textStyle: TextStyle(
                     fontWeight: FontWeight.w500, fontSize: 18)),

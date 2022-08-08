@@ -16,7 +16,8 @@ void main() async {
   var uri = Uri.dataFromString(window.location.href);
   String testId = uri.pathSegments.last;
   if (testId.isEmpty) {
-    testId = "fbc4c0f0-1ee3-48af-b623-f007e82194db";
+    return runApp(const MaterialApp(home: SecondPage(title: "Для прохождения теста нужно использовать персональную ссылку"),
+        debugShowCheckedModeBanner: false));
   }
   StageModel model = await repo.fetchStage(testId);
   switch (model.kind) {
@@ -24,7 +25,7 @@ void main() async {
       return runApp(MaterialApp(home: IntroScreenWidget(model, testId),
         debugShowCheckedModeBanner: false,));
     case StageKind.finish:
-      return runApp(MaterialApp(home: SecondPage(title: (model.stage as StartFinishStage).description,),
+      return runApp(MaterialApp(home: SecondPage(title: (model.stage as StartFinishStage).title,),
         debugShowCheckedModeBanner: false,));
     case StageKind.test:
       return runApp(MaterialApp(home: TestScreen(model, testId), debugShowCheckedModeBanner: false,));

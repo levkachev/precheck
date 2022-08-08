@@ -4,13 +4,13 @@ import 'dart:io';
 import 'package:tests/models/stage_model.dart';
 
 class TestModel extends Stage {
-  final DateTime testStartedTimestamp;
+  final int testStartedTimestamp;
   final int stepsCount;
   final int currentStep;
   final QuestionModel question;
 
   TestModel.fromJson(Map<String, dynamic> json)
-      : this.testStartedTimestamp = DateTime.parse(json['startAt']),
+      : this.testStartedTimestamp = json['startAtTimestamp'],
         this.stepsCount = json['stepsCount'],
         this.currentStep = json['currentStep'],
         this.question = QuestionModel.fromJson(json["currentQuestion"]);
